@@ -23,6 +23,8 @@ class Modelo
             $campo_nuevo = $registro['COLUMN_NAME'];
 
             $this->$campo_nuevo = $datos[$campo_nuevo];
+
+            $this->claves[$campo_nuevo] = $datos[$campo_nuevo];
     
         }
 
@@ -49,6 +51,17 @@ class Modelo
         $this->inicializar($registro);
 
         return $registro;
+
+    }
+
+    function sincronizar_con_campo($id)
+    {
+        $this->recuperar($id);
+
+        foreach($this->claves as $clave => $valor)
+            Campo::val($clave,$valor);
+
+
 
     }
 
