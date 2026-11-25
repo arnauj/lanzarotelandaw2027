@@ -7,17 +7,18 @@
 
     $usuario = new Usuario();
 
-    switch($_GET['seccion'])
+    switch(Campo::val('seccion'))
     {
         case 'usuarios':
             //Cargamos la sección usuarios
 
-            $url_form = '/usuarios/'.$_GET['oper'];
+            $url_form = '/usuarios/'.Campo::val('oper');
+
 
             
             
 
-            switch($_GET ['oper'])
+            switch(Campo::val('oper'))
             {
 
                 case 'baja':
@@ -25,7 +26,7 @@
                     $operacion = Idioma::lit('eliminacion');
 
 
-                    $id = $_GET['pagina'];
+                    $id = Campo::val('pagina');
 
 
                    
@@ -36,7 +37,7 @@
 
                     $operacion = empty($operacion)? Idioma::lit('modificacion'): $operacion;
 
-                    $id = $_GET['pagina'];
+                    $id = Campo::val('pagina');
 
                     $url_form .= '/'.$id;
 
@@ -55,7 +56,7 @@
                     $boton_alta = "<input type=\"submit\" class=\"theme-primary btn-solid btn-styled\" value=\"". OPERACION ." de usuario\" />";
                     
                     $errores = false;
-                    $disabled = $_GET['oper'] == 'baja'?  " readonly=\"readonly\" " : '';
+                    $disabled = Campo::val('oper') == 'baja'?  " readonly=\"readonly\" " : '';
 
                     if($_POST['paso'] == '1')
                     {
@@ -129,7 +130,7 @@
                             $disabled = " disabled=\"disabled\" ";
 
 
-                            switch($_GET['oper'])
+                            switch(Campo::val('oper'))
                             {
                                 case 'alta':
                                     
@@ -234,7 +235,7 @@
 
                     $datos_usuarios = $usuario->listado([
                         'limit'  => TOTAL_PAGINAS_LISTADO
-                       ,'offset' => $_GET['pagina'] * TOTAL_PAGINAS_LISTADO
+                       ,'offset' => Campo::val('pagina') * TOTAL_PAGINAS_LISTADO
 
                     ]);
 
@@ -289,8 +290,8 @@
                     }
 
                     $url_anterior = '';
-                    if ($_GET['pagina'] != "0")
-                    {   $pagina_anterior = $_GET['pagina'] - 1;
+                    if (Campo::val('pagina') != "0")
+                    {   $pagina_anterior = Campo::val('pagina') - 1;
                         $url_anterior = "<li class=\"page-item\"><a class=\"page-link\" href=\"/usuarios/listado/{$pagina_anterior}\">".Idioma::lit('anterior')."</a></li>";
                     }
 
@@ -298,9 +299,9 @@
 
                     $url_siguiente = '';
 
-                    if($total_registros > (($_GET['pagina'] + 1) * TOTAL_PAGINAS_LISTADO))
+                    if($total_registros > ((Campo::val('pagina') + 1) * TOTAL_PAGINAS_LISTADO))
                     {
-                        $pagina_siguiente = $_GET['pagina'] + 1;
+                        $pagina_siguiente = Campo::val('pagina') + 1;
                         $url_siguiente = "<li class=\"page-item\"><a class=\"page-link\" href=\"/usuarios/listado/{$pagina_siguiente}\">".Idioma::lit('siguiente')."</a></li>";
                     }
                 break;

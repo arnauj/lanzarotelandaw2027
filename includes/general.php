@@ -19,6 +19,7 @@ spl_autoload_register(function ($class_name) {
 
         case 'Template':
         case 'Idioma':
+        case 'Campo':
             $subdirectorio = '';
         break;
 
